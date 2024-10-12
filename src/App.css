@@ -1,0 +1,29 @@
+body{
+  background-color: #ffffff;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #01031C;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #010869;
+  border-radius: 5px;
+  transition: all;
+  transition-duration: 400ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #000dc5;
+  transition: all;
+  transition-duration: 400ms;
+  transition-timing-function: ease-in-out;
+}

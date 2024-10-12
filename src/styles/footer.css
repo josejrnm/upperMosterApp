@@ -1,0 +1,29 @@
+@media(max-width:720px){
+    .socialIcon{
+        width: 5rem !important;
+        height: 3rem !important;
+    }
+}
+@media(min-width:720px){
+    .socialIcon{
+        width: 55px !important;
+        height: 45px !important;
+    }
+}
+
+
+#followus{
+    border: 2px solid;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-image: linear-gradient(to left, transparent 20%,#F5E4D7, transparent 80%) 1;
+}
+
+#Categorie,#games{
+    border: 2px solid;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-image: linear-gradient(to left, transparent 20%,#c0c0c0, transparent 80%) 1;
+}

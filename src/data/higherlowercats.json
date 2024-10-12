@@ -1,0 +1,32 @@
+[
+    {
+        "name": "country",
+        "metrics": [
+            "population",
+            "area",
+            "gdp",
+            "gdp_per_capita",
+            "life_expectancy",
+            "literacy_rate",
+            "hdi",
+            "co2_per_capita",
+            "unemployment_rate",
+            "military_expenditure"
+        ]
+    },
+    {
+        "name": "football",
+        "metrics": [
+            "goals_per_player",
+            "titles_per_team",
+            "titles_per_player",
+            "matches_played",
+            "assists",
+            "red_cards",
+            "international_titles",
+            "titles_per_coach",
+            "stadium_capacity",
+            "founding_date"
+        ]
+    }
+]

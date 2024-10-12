@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="393" viewBox="0 0 393 393">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        font-size: 180px;
+        text-anchor: end;
+        font-family: TTOctosquaresTrlCmd-XBd, "TT Octosquares Trl Cmd";
+      }
+    </style>
+  </defs>
+  <path id="Triángulo_1" data-name="Triángulo 1" class="cls-1" d="M196.375,123.719l175,200h-350Z"/>
+  <path id="Triángulo_1_copia" data-name="Triángulo 1 copia" class="cls-1" d="M196,270L21,70H371Z"/>
+  <ellipse id="Elipse_3" data-name="Elipse 3" cx="248" cy="139.828" rx="125" ry="94.828"/>
+  <ellipse id="Elipse_3_copia" data-name="Elipse 3 copia" cx="143" cy="268.515" rx="60" ry="45.516"/>
+  <text id="_" data-name="?" class="cls-2" x="345.082" y="202.919"><tspan x="345.082">?</tspan></text>
+  <path id="Elipse_3_copia_2" data-name="Elipse 3 copia 2" class="cls-3" d="M65,291c16.569,0,30,10.189,30,22.759s-13.431,22.758-30,22.758-30-10.189-30-22.758S48.432,291,65,291Z"/>
+</svg>
