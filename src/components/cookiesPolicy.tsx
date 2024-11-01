@@ -6,7 +6,7 @@ interface CookiesProps {
     t: TFunction;
     theme: boolean;
     acceptedCookies: boolean | null; // o simplemente boolean si nunca será null
-    setAcceptedCookies: Dispatch<SetStateAction<boolean | null>>; // o simplemente boolean si nunca será null
+    setAcceptedCookies: Dispatch<SetStateAction<boolean>>; // o simplemente boolean si nunca será null
 }
 
 const CookieBanner: React.FC<CookiesProps> = ({ t, acceptedCookies, setAcceptedCookies }) => {

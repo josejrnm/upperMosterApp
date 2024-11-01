@@ -38,18 +38,18 @@ const Footer: React.FC<LangProps> = ({ t, theme }) => {
                 <section className="w-[80%] mt-8 mb-8 md:mt-0 md:mb-0 md:w-[15%] h-[100%] flex flex-col text-justify items-start">
                     <h1 className="text-[1rem] mb-1 capitalize">Company</h1>
                     <ul className="font-normal text-[0.8rem] capitalize">
-                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="">{t('home')}</Link></li>
-                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="">{t('blog')}</Link></li>
-                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="">{t('aboutus')}</Link></li>
-                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="">{t('login')}</Link></li>
+                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="/">{t('home')}</Link></li>
+                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="/companyInfo">{t('blog')}</Link></li>
+                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in" to="/companyInfo">{t('aboutus')}</Link></li>
+                        <li><Link className="hover:text-yellow-300 transition-all duration-75 ease-in pointer-events-none" to="/">{t('login')}</Link></li>
                     </ul>
                 </section>
                 <section className="w-[80%] md:w-[15%] h-[100%] flex flex-col justify-start text-justify">
                     <h1 className="text-[1rem] mb-1 capitalize">{t('termpols')}</h1>
                     <ul className="font-normal capitalize text-[0.8rem]">
-                        <li className="mb-[2px]"><Link className="w-[auto] hover:text-cyan-300 transition-all duration-75 ease-in" to="">{t('termsconds')}</Link></li>
-                        <li className="mb-[2px]"><Link className="hover:text-cyan-300 transition-all duration-75 ease-in" to="">{t('privatepols')}</Link></li>
-                        <li className="mb-[2px]"><Link className="hover:text-cyan-300 transition-all duration-75 ease-in" to="">{t('cookiespols')}</Link></li>
+                        <li className="mb-[2px]"><Link className="w-[auto] hover:text-cyan-300 transition-all duration-75 ease-in" to="/companyInfo">{t('termsconds')}</Link></li>
+                        <li className="mb-[2px]"><Link className="hover:text-cyan-300 transition-all duration-75 ease-in" to="/companyInfo">{t('privatepols')}</Link></li>
+                        <li className="mb-[2px]"><Link className="hover:text-cyan-300 transition-all duration-75 ease-in" to="/companyInfo">{t('cookiespols')}</Link></li>
                     </ul>
                 </section>
 
