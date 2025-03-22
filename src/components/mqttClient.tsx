@@ -14,6 +14,8 @@ const MqttCliente = () => {
   const brokerUrl = 'ws://broker.emqx.io:8083/mqtt';
   const topic = 'mqttservices/test'
   const [indexer, setIndexer] = useState(0)
+  console.log(indexer);
+
 
   const [client, setClient] = useState<MqttClient | null>(null);
   useEffect(() => {

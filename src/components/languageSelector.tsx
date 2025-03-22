@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { i18n as I18nType } from 'i18next';
-import { setCookie } from "../utils/cookiesManage"
+import { getCookie, setCookie } from "../utils/cookiesManage"
 import "/node_modules/flag-icons/css/flag-icons.min.css"
 import useClickOutside from '../utils/clickOut';
+import { IoLanguage } from "react-icons/io5";
 
 
 
@@ -15,6 +16,13 @@ const LanguageSelector: React.FC<LangProps> = ({ i18n }) => {
     const myRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
     useClickOutside(myRef, setIsOpen);
+    const [theme, setTheme] = useState(true);
+
+    useEffect(() => {
+        if (getCookie('userTheme')) {
+            setTheme(getCookie('userTheme') === 'true')
+        }
+    }, [getCookie('userTheme')])
 
     const languages = [
         { code: 'en', label: 'English' },
@@ -53,7 +61,10 @@ const LanguageSelector: React.FC<LangProps> = ({ i18n }) => {
         <div ref={myRef} className="relative w-min rounded-lg ml-6 z-50">
             <button
                 onClick={toggleMenu}
-                className={`bg-gray-800 text-white w-[3.7rem] h-[2rem] focus:outline-none z-50 flex flex-row cursor-pointer justify-start p-1 text-[0.9em] items-center rounded-lg ${isOpen ? "rounded-b-none rounded-t-lg" : ""} shadow-[#004400] shadow-sm`}>
+                className={`${theme ? 'bg-gray-800 text-white' : 'bg-gray-400 text-black'}  w-[5.2em] h-[2rem] focus:outline-none z-50 flex flex-row cursor-pointer justify-start p-1 text-[0.9em] items-center rounded-lg ${isOpen ? "rounded-b-none rounded-t-lg" : ""} shadow-[#004400] shadow-sm`}>
+                <section>
+                </section>
+                <IoLanguage size={'1.2em'} />
                 <span className={`fi fi-${langSelected.code} ml-1 mr-1`}></span>
                 <h2 className='inline-block'>{`${langSelected.code == 'um' ? "EN" : langSelected.code}`.toUpperCase()}</h2>
             </button>
@@ -64,8 +75,9 @@ const LanguageSelector: React.FC<LangProps> = ({ i18n }) => {
                             <li key={lang.code}>
                                 <button
                                     onClick={() => { changeLanguage(lang.code) }}
-                                    className={`backdrop-blur-[1px] bg-[#1f2937ca] text-white w-[3.7rem] focus:outline-none flex flex-row cursor-pointer justify-start p-1 text-[0.9em] items-center ${lang.code == 'ru' ? "rounded-t-none rounded-b-lg" : ""} hover:bg-black  hover:translate-y-[0.08rem] transition-all duration-[150ms] ease-in`}
+                                    className={`backdrop-blur-[1px] ${theme ? 'bg-gray-800 text-white hover:bg-black' : 'bg-gray-400 text-black hover:bg-white'} w-[5.2em] focus:outline-none flex flex-row cursor-pointer justify-start p-1 text-[0.9em] items-center ${lang.code == 'ru' ? "rounded-t-none rounded-b-lg" : ""} hover:bg-black  hover:translate-y-[0.08rem] transition-all duration-[150ms] ease-in`}
                                 >
+                                    <IoLanguage size={'1.2em'} />
                                     <span className={`fi fi-${lang.code == 'en' ? 'um' : lang.code} ml-1 mr-1`}></span>
                                     <h2 className='inline-block'>{lang.code.toUpperCase()}</h2>
                                 </button>

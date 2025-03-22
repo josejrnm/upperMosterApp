@@ -14,8 +14,11 @@ import pointLogo from "../assets/pointLogo.svg"
 interface AppProps {
     t: TFunction;
     theme: boolean;
+    loggedIn: boolean;
     totalPoints: number;
     setTotalPoints: Dispatch<SetStateAction<number>>;
+    userPoints: number;
+    setUserPoints: Dispatch<SetStateAction<number>>;
 }
 
 
@@ -31,7 +34,7 @@ interface DataItem {
 }
 
 
-const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, setTotalPoints }) => {
+const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, setTotalPoints, userPoints, setUserPoints, loggedIn }) => {
 
 
     const tS = ThemeColors(theme);
@@ -142,7 +145,7 @@ const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, se
             setMultiplier(3);
         } else if (score > 10) {
             setMultiplier(2);
-        } else {
+        } else if (score < 10) {
             setMultiplier(1);
         }
 
@@ -157,6 +160,9 @@ const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, se
         // Actualiza la cookie de puntos totales cada vez que cambie totalPoints
         setCookie('totalPoints', totalPoints.toString(), { expires: 365 });
     }, [totalPoints]);
+    useEffect(() => {
+        setCookie('userPoints', userPoints.toString(), { expires: 365 });
+    }, [userPoints]);
 
     const correctAnswerHandler = () => {
         setIncreasedNumer(true);
@@ -175,7 +181,7 @@ const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, se
                 setCorrectAnswers(correctAnswers + 1)
                 setScore(prevScore => {
                     const newScore = prevScore + multiplier;
-                    setTotalPoints(prevTotal => prevTotal + multiplier); // Actualiza el total de puntos
+                    !loggedIn ? setTotalPoints(prevTotal => Math.ceil(prevTotal + multiplier)) : setUserPoints(prevUser => Math.ceil(prevUser + multiplier)); // Actualiza el total de puntos
                     return newScore;
                 });
             }, 600);
@@ -188,12 +194,13 @@ const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, se
         if (score > recordHigherLower) {
             setScore(prevScore => {
                 const newScore = prevScore + 50; // Bonificación por superar el récord
-                setTotalPoints(prevTotal => prevTotal + 50); // Actualiza el total de puntos
+                !loggedIn ? setTotalPoints(prevTotal => prevTotal + 50) : setUserPoints(prevTotal => prevTotal + 50);
                 return newScore;
             });
         }
         setTimeout(() => {
             setCorrectAnswers(0)
+            // setScore(0);
             setMoveC(true);
         }, 1200);
     };
@@ -288,8 +295,8 @@ const HigherLowerGameApp: React.FC<AppProps> = memo(({ t, theme, totalPoints, se
                 <div className="md:w-[25%] h-[55%] w-[90%] bg-[#334] rounded-[3em] shadow-[0px_0px_px_0px_#d55] flex flex-col justify-evenly items-center transition-all duration-300 ease-out text-white">
                     <h1>{score > 0 ? `${t('goodjob').toUpperCase()}!` : score > 20 ? `${t('excelent').toUpperCase()}!` : t('goodtry').toUpperCase()}</h1>
                     <h1>{t('yougot').toLocaleUpperCase()}: {score}<img src={pointLogo} alt="points" className="h-[1.8em] w-auto inline-block invert" /></h1>
-                    <button className="w-[70%] bg-[#223] hover:bg-[#335] active:bg-[#339] h-[4em] rounded-[3em] text-white" onClick={goBack}>Volver</button>
-                    <button className="w-[70%] bg-[#433] hover:bg-[#633] active:bg-[#833] h-[4em] rounded-[3em] text-white transition-all duration-[250ms] ease-out" onClick={retry}>Reintentar</button>
+                    <button className="uppercase w-[70%] bg-[#433] hover:bg-[#633] active:bg-[#833] h-[4em] rounded-[3em] text-white transition-all duration-[250ms] ease-out " onClick={retry}>{t('retry')}</button>
+                    <button className="uppercase w-[70%] bg-[#223] hover:bg-[#335] active:bg-[#339] h-[4em] rounded-[3em] text-white" onClick={goBack}>{t('back')}</button>
                 </div>
             </div >
 

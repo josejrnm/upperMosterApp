@@ -26,10 +26,10 @@ const CookieBanner: React.FC<CookiesProps> = ({ t, acceptedCookies, setAcceptedC
         setCookie('acceptedCookies', 'true', { expires: 365 }); // Cookie válida por un año
     };
 
-    const handleReject = () => {
-        setAcceptedCookies(false);
-        setCookie('acceptedCookies', 'false', { expires: 365 }); // Cookie válida por un año
-    };
+    // const handleReject = () => {
+    //     setAcceptedCookies(false);
+    //     setCookie('acceptedCookies', 'false', { expires: 365 }); // Cookie válida por un año
+    // };
 
     return (
         <>
@@ -51,7 +51,7 @@ const CookieBanner: React.FC<CookiesProps> = ({ t, acceptedCookies, setAcceptedC
                         <p className='mb-2'>{t('cookiesdate')}</p>
                     </section>
                     <section className={`text-[1.4rem] font-light w-[100%] h-[20%] flex flex-row justify-evenly mt-6 rounded-3xl`}>
-                        <button onClick={handleReject} className={`rounded-3xl backdrop-blur-xl w-[48%] md:w-[35%] h-[85%] md:h-[100%] bg-[#afaf0f] hover:bg-[#bfbf02] transition-all duration-[100ms] ease-in`}>Rechazar</button>
+                        {/* <button onClick={handleReject} className={`rounded-3xl backdrop-blur-xl w-[48%] md:w-[35%] h-[85%] md:h-[100%] bg-[#afaf0f] hover:bg-[#bfbf02] transition-all duration-[100ms] ease-in`}>Rechazar</button> */}
                         <button onClick={handleAccept} className={`rounded-3xl backdrop-blur-xl w-[48%] md:w-[35%] h-[85%] md:h-[100%] bg-[#22cc22] hover:bg-[#09bf09] transition-all duration-[100ms] ease-in`}>Aceptar</button>
                     </section>
                 </div >

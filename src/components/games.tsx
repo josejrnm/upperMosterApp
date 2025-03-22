@@ -1,23 +1,20 @@
 import React, { Dispatch, memo, SetStateAction, useEffect, useState } from "react";
 import { TFunction, i18n as I18nType } from 'i18next';
 import { Link, useNavigate } from "react-router-dom";
-import LanguageSelector from "./languageSelector.tsx";
 import Footer from "./footer.tsx";
 import "../styles/footer.css"
 import "../styles/home.css"
 import ThemeColors from "../utils/themeColors.ts";
-import ChangeTheme from "./changeTheme.tsx";
-import mainLogo from "../assets/mainLogo.svg"
-import pointLogo from "../assets/pointLogo.svg"
-import loggoutIcon from "../assets/loggout.svg"
-import upperMoster from "../assets/title.svg"
 import higherlowerImg from "../img/util/higherlowerImg.jpeg"
 import quizImg from "../img/util/quizImg.jpeg"
+import tablePosition from "../img/util/positionTable.jpeg"
 import { ColorRing } from 'react-loader-spinner'
 import Loader from "./loader.tsx";
 import GuestName from "./guestName.tsx";
-import loggedOutUSer from "../utils/loggedOut.ts";
-
+import AdScript from "./adscript.tsx";
+import RedeemEmailBox from "./redeemEmail.tsx";
+import TopBar from "./topBar.tsx";
+import BackBTn from "./backBtn.tsx";
 
 
 
@@ -33,20 +30,21 @@ interface LangProps {
     username: String | undefined;
     userpoints: number;
 }
-// const Games: React.FC<LangProps> = memo(({ t, i18n, theme, setTheme, isLoading, isMoved, setIsLoading, setIsMoved, loader, setLoader }) => {
 const Games: React.FC<LangProps> = memo(({ t, i18n, theme, setTheme, guestName, setGuestName, totalPoints, loggedIn, username, userpoints }) => {
     const tS = ThemeColors(theme);
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [scrollValueY, setscrollValueY] = useState(0);
-    const navigate = useNavigate();
-
     const [isLoading, setIsLoading] = useState(true);
     const [loaderGames, setLoaderGames] = useState(false);
     const [isMoved, setIsMoved] = useState(true);
     const [notAvailableWarning, setNotAvailableWarning] = useState(false);
+    const [redeemActive, setRedeemActive] = useState(false);
     const [editName, setEditName] = useState(false)
 
+
+
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -94,6 +92,31 @@ const Games: React.FC<LangProps> = memo(({ t, i18n, theme, setTheme, guestName, 
         }, 300);
     }
 
+    const isSupportedBrowser = (): boolean => {
+        const userAgent = navigator.userAgent;
+        // Detectar Chrome
+        const isChrome = /Chrome/.test(userAgent) && /Google Inc/.test(navigator.vendor);
+        // Detectar Safari
+        const isSafari = /Safari/.test(userAgent) && /Apple Computer/.test(navigator.vendor);
+        // Detectar Edge
+        const isEdge = /Edg/.test(userAgent);
+        // Retornar true si es uno de los navegadores permitidos
+        if (/SamsungBrowser/i.test(userAgent)) {
+            return false
+        } else {
+            return isChrome || isSafari || isEdge
+        };
+    };
+
+    useEffect(() => {
+        if (!isSupportedBrowser()) {
+            // Redirigir a otra página
+            navigate('/unsupported-browser');
+            // O mostrar un mensaje
+            alert('Su navegador no es compatible con esta aplicación. Por favor, use un navegador diferente.');
+        }
+    }, [navigate]);
+
 
     return (
         <>
@@ -110,32 +133,31 @@ const Games: React.FC<LangProps> = memo(({ t, i18n, theme, setTheme, guestName, 
             </div>
 
             {!loggedIn && (<GuestName t={t} guestName={guestName} setGuestName={setGuestName} setEditName={setEditName} />)}
+            {redeemActive && (<RedeemEmailBox t={t} setRedeemActive={setRedeemActive} />)}
 
-            <section id='header' className={`${isScrolled ? theme ? "bg-[#eea8] fixed" : "bg-[#b9b9b995] fixed" : theme ? "bg-[#ffa8] relative" : "bg-[#91919195] relative"} w-full z-[99] flex flex-col-reverse top-0 ${editName ? "h-[12rem]" : "h-[9rem]"} py-4 items-center justify-evenly shadow-sm backdrop-blur-[1em] md:h-[6rem] md:flex-row md:justify-between md:items-center md:px-12 md:backdrop-blur-[1px] ${tS.bgColorTopBar} md:transition-all md:duration-[250ms] md:ease-in`}>
-                <Link to="/" className="h-[3rem] w-[100%] md:w-[auto] md:h-14 flex flex-row justify-center items-center">
-                    <img className="h-[100%]" src={mainLogo} alt="UpperMoster" title="UpperMoster" />
-                    <img src={upperMoster} alt="UpperMoster" className={`w-[11rem] md:w-[14rem] invert md:invert-0`} />
-                </Link>
-                <div className="w-[100%] md:w-[auto] h-full flex md:flex-row items-center justify-between pl-4 pr-1 pt-4 pb-2 md:pt-0 md:pb-0 md:pr-0 md:pl-0 md:m-0 ">
-                    <section className={`w-max h-max md:h-full flex md:flex-row flex-col items-center`}>
-                        {(loggedIn || totalPoints != 0) && (<section className={`${!theme ? "text-white md:text-white" : "text-black md:text-[#ffa]"}  w-full h-full flex flex-row justify-center items-center pl-2 md:pl-4 md:pr-4`}>
-                            <h2 className="text-[1.4em]">{loggedIn ? userpoints : totalPoints}</h2>
-                            <img src={pointLogo} alt="points" className="h-[1.8em] w-auto md:invert-[1]" />
-                        </section>
-                        )}
-                        <h1 className={`left-0 ${theme ? "text-black md:text-[#eea]" : "text-white"} ${loggedIn ? "pointer-events-none" : ""} text-[1.1rem] font-semibold uppercase cursor-pointer`} onClick={() => setEditName(!editName)}>{loggedIn ? username : guestName}</h1>
-                        <button className={`${editName ? "display " : "hidden"} w-max h-max p-2 m-2 rounded-md tracking-widest ${!theme ? "bg-[#338] text-[#ddd]" : "bg-[#ee4]"} font-bold  text-[0.8em] capitalize`} onClick={() => setGuestName('')}>{t('edit')}</button>
-                    </section>
-                    <div className="flex flex-row items-center">
-                        <LanguageSelector i18n={i18n} />
-                        <ChangeTheme setTheme={setTheme} theme={theme} />
-                        <button onClick={loggedOutUSer} className={`${loggedIn ? "" : "hidden"} hover:bg-red-500 hover:invert mr-2 bg-gradient-to-tr from-[#ff3e] to-[#8e4a] rounded-xl`}><img className="w-10 h-[auto] p-1 border-solid border-[1px] border-purple-950 rounded-xl" src={loggoutIcon} alt="Log out" /></button>
-                    </div>
-                </div>
-            </section >
-            <div className={`z-20 ${isScrolled ? "" : "hidden"} bg-transparent h-[9rem] md:h-[6rem] w-full`}></div>
-            <div className={`${loggedIn ? "" : guestName === "" ? "hidden" : ""} w-full md:w-auto h-[auto] md:h-[37rem] pb-[2rem] md:pb-[10rem] flex flex-col flex-nowrap justify-evenly items-center transition-all duration-[200ms] ease-linear z-10`}>
-                <h1 id="games" className={`${tS.textColor} font-extralight h-[1.7em] w-full text-center tracking-wider text-[3rem] capitalize`}>{t('games')}</h1>
+            <BackBTn />
+            <TopBar i18n={i18n} theme={theme} setEditName={setEditName} editName={editName} username={username} userpoints={userpoints} setTheme={setTheme} loggedIn={loggedIn} totalPoints={totalPoints} guestName={guestName} setGuestName={setGuestName} t={t} isScrolled={isScrolled} setRedeemActive={setRedeemActive} />
+            {(window.innerWidth <= 720) && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                <AdScript keyValue={3} atOptions={{
+                    'key': '4579ed5f9089da6a442187f2056adfda',
+                    'format': 'iframe',
+                    'height': 50,
+                    'width': 320,
+                    'params': {}
+                }} />
+            </div>)}
+            {(window.innerWidth > 720) && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                <AdScript keyValue={3} atOptions={{
+                    'key': 'f2525a336948ec91dd454fa763b70b78',
+                    'format': 'iframe',
+                    'height': 90,
+                    'width': 728,
+                    'params': {}
+                }} />
+            </div>)}
+            <div className={`z-20 ${isScrolled ? "" : "hidden"} bg-transparent h-[12.5rem] md:h-[6rem] w-full`}></div>
+            <div className={`${loggedIn ? "" : guestName === "" ? "hidden" : ""} w-full md:w-auto h-[auto] md:h-max pb-[2rem] md:pb-[10rem] flex flex-col flex-nowrap justify-evenly items-center transition-all duration-[200ms] ease-linear z-10`}>
+                <h1 id="games" className={`${tS.textColor} font-extralight md:mb-[1.5em] h-[1.7em] w-full text-center tracking-wider text-[3rem] capitalize`}>{t('games')}</h1>
                 <div className="w-[95%] mt-4 md:-mt-10 flex flex-col md:flex-row justify-evenly items-center">
 
                     <section
@@ -154,39 +176,38 @@ const Games: React.FC<LangProps> = memo(({ t, i18n, theme, setTheme, guestName, 
                             <h1 className='font-bold capitalize pl-2 text-[1.5em] text-center'>{t('quiz')}</h1>
                         </Link>
                     </section >
-                    {/* <section
-                        className={`overflow-hidden rounded-3xl relative tracking-tighter group flex flex-col w-[90%] md:w-[15em] h-[8em] m-[0.4em] transition-all duration-[250ms] ease-in`}
-                        style={{ boxShadow: `0px 0px 2px 0px ${tS.BW}`, border: `0.1em solid ${tS.borderCol}` }}
-                    >
-                        <section
-                            className={`absolute inset-0 bg-cover bg-center transition-transform duration-[450ms] ease-in-out transform ${window.innerWidth < 720 ? ((scrollValueY <= 140) ? "scale-105" : "scale-150") : ""} scale-105 group-hover:scale-150`}
-                            style={{ backgroundImage: `url(${quizImg})` }}
-                        />
-                        <Link
-                            to=""
-                            className={`active:bg-[#1e1] active:text-[#110] ${window.innerWidth < 720 ? ((scrollValueY <= 140) ? "bg-[#303a] backdrop-blur-[0em] text-[#fffefe]" : "text-[#246e13] bg-[#ffffff7c] backdrop-blur-[0.2em]") : ""} flex flex-col justify-center w-[100%] h-[100%] text-[#af2d31] hover:text-[#fffefe] md:bg-[#c4c4c47c] hover:bg-[#303a] backdrop-blur-[0.2em] hover:backdrop-blur-[0em] transition-all duration-[450ms] ease-in-out z-[900]`}
-                            onClick={() => onLoader("LoginPage")}
-                        >
-                            <h1 className='font-bold capitalize pl-2 text-[1.5em] text-center'>{t('quiz')}</h1>
-                        </Link>
-                    </section > */}
 
                     <section
                         className={`overflow-hidden rounded-3xl relative tracking-tighter group flex flex-col w-[90%] md:w-[15em] h-[8em] m-[0.4em] transition-all duration-[250ms] ease-in`}
                         style={{ boxShadow: `0px 0px 2px 0px ${tS.BW}`, border: `0.1em solid ${tS.borderCol}` }}
                     >
                         <section
-                            className={`absolute inset-0 bg-cover bg-center transition-transform duration-[450ms] ${window.innerWidth < 720 ? ((scrollValueY <= 285) ? "scale-105" : "scale-150") : ""} md:scale-150 ease-in-out transform md:x   group-hover:scale-105`}
+                            className={`absolute inset-0 bg-cover bg-center transition-transform duration-[450ms] ${window.innerWidth < 720 ? (!(scrollValueY >= 160 && scrollValueY <= 260) ? "scale-105" : "scale-150") : ""} md:scale-150 ease-in-out transform md:x   group-hover:scale-105`}
                             style={{ backgroundImage: `url(${higherlowerImg})` }}
                         />
                         <Link
-                            to="" className={`active:bg-[#1ee] active:text-[#110] ${window.innerWidth < 720 ? ((scrollValueY <= 285) ? "bg-[#773a] backdrop-blur-[0em] text-[#fffefe]" : "text-[#246e13] bg-[#ffffff7c] backdrop-blur-[0.2em]") : ""} flex flex-col justify-center w-[100%] h-[100%] text-[#246e13] hover:text-[#fffefe] md:bg-[#ffffff7c] hover:bg-[#033a] backdrop-blur-[0.2em] hover:backdrop-blur-[0em] transition-all duration-[450ms] ease-in-out z-[900]`}
+                            to="" className={`active:bg-[#1ee] active:text-[#110] ${window.innerWidth < 720 ? (!(scrollValueY >= 160 && scrollValueY <= 260) ? "bg-[#773a] backdrop-blur-[0em] text-[#fffefe]" : "text-[#246e13] bg-[#ffffff7c] backdrop-blur-[0.2em]") : ""} flex flex-col justify-center w-[100%] h-[100%] text-[#246e13] hover:text-[#fffefe] md:bg-[#ffffff7c] hover:bg-[#033a] backdrop-blur-[0.2em] hover:backdrop-blur-[0em] transition-all duration-[450ms] ease-in-out z-[900]`}
                             onClick={() => onLoader("higherlower")}
                         >
                             <h1 className='font-bold pl-2 text-[1.4em] text-center capitalize'>{t('higherlower')}</h1>
                         </Link>
                     </section>
                 </div >
+                <section
+                    className={`overflow-hidden rounded-3xl relative tracking-tighter group flex flex-col w-[85%] md:w-[30em] h-[8em] my-[1.2em] md:my-[2em] transition-all duration-[250ms] ease-in`}
+                    style={{ boxShadow: `0px 0px 2px 0px ${tS.BW}`, border: `0.1em solid ${tS.borderCol}` }}
+                >
+                    <section
+                        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[450ms] ${window.innerWidth < 720 ? (!(scrollValueY >= 260 && scrollValueY <= 400) ? "scale-105" : "scale-150") : ""} md:scale-150 ease-in-out transform md:x   group-hover:scale-105`}
+                        style={{ backgroundImage: `url(${tablePosition})` }}
+                    />
+                    <Link
+                        to="" className={`active:bg-[#1ee] active:text-[#110] ${window.innerWidth < 720 ? (!(scrollValueY >= 260 && scrollValueY <= 400) ? "bg-[#773a] backdrop-blur-[0em] text-[#fffefe]" : "text-[#642e13] bg-[#ffffff7c] backdrop-blur-[0.2em]") : ""} flex flex-col justify-center w-[100%] h-[100%] text-[#642e13] hover:text-[#fffefe] md:bg-[#ffffff7c] hover:bg-[#033a] backdrop-blur-[0.2em] hover:backdrop-blur-[0em] transition-all duration-[450ms] ease-in-out z-[900]`}
+                        onClick={() => onLoader("../uppersAwards")}
+                    >
+                        <h1 className='font-bold pl-2 text-[1.4em] text-center capitalize'>{t('tableParticipants')}</h1>
+                    </Link>
+                </section>
             </div >
             <Loader theme={theme} loader={loaderGames} />
             <Footer t={t} theme={theme} />

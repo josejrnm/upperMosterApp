@@ -1,27 +1,21 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { TFunction, i18n as I18nType } from 'i18next';
-import { Link } from "react-router-dom";
-import LanguageSelector from "./languageSelector";
 import CatSubCat from "./hlCats.tsx";
 import Footer from "./footer.tsx";
 import "../styles/home.css"
 import "../styles/footer.css"
-import ThemeColors from "../utils/themeColors.ts";
-import ChangeTheme from "./changeTheme.tsx";
-import mainLogo from "../assets/mainLogo.svg"
-import pointLogo from "../assets/pointLogo.svg"
-import loggoutIcon from "../assets/loggout.svg"
-import upperMoster from "../assets/title.svg"
+import ThemeColors from "../utils/themeColors.ts"
 import HLLogo from "../assets/higherlower.svg"
 import Categories from "../data/higherlowercats.json"
+import tablePosition from "../img/util/positionTable.jpeg"
 import BackBTn from "./backBtn.tsx";
 import Loader from "./loader.tsx";
 import { ColorRing } from 'react-loader-spinner'
 import GuestName from "./guestName.tsx";
-import loggedOutUSer from "../utils/loggedOut.ts";
-
-
-
+import AdScript from "./adscript.tsx";
+import RedeemEmailBox from "./redeemEmail.tsx";
+import TopBar from "./topBar.tsx";
+import { Link, useNavigate } from "react-router-dom";
 
 
 interface HomeProps {
@@ -29,14 +23,14 @@ interface HomeProps {
     i18n: I18nType;
     theme: boolean;
     loader: boolean;
-    setTheme: Dispatch<SetStateAction<boolean>>;
-    setLoader: Dispatch<SetStateAction<boolean>>;
     guestName: string | undefined;
-    setGuestName: Dispatch<SetStateAction<string | undefined>>;
     totalPoints: number;
     loggedIn: boolean;
     username: String | undefined;
     userpoints: number;
+    setTheme: Dispatch<SetStateAction<boolean>>;
+    setLoader: Dispatch<SetStateAction<boolean>>;
+    setGuestName: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader, loader, guestName, setGuestName, totalPoints, loggedIn, username, userpoints }) => {
@@ -45,6 +39,8 @@ const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader,
     const [isScrolled, setIsScrolled] = useState(false);
     const [scrollValueY, setscrollValueY] = useState(0);
     const [editName, setEditName] = useState(false)
+    const [redeemActive, setRedeemActive] = useState(false);
+
 
     const [isLoading, setIsLoading] = useState(true);
     const [isMoved, setIsMoved] = useState(true);
@@ -77,8 +73,45 @@ const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader,
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [window.scrollY]);
 
+    const switchLoader = () => {
+        setLoader(loader => !loader);
+    }
+    const navigate = useNavigate();
+
+    const onLoader = (route: string) => {
+        switchLoader()
+        setTimeout(() => {
+            navigate(`${route}`);
+            switchLoader()
+        }, 300);
+    }
+
+    const isSupportedBrowser = (): boolean => {
+        const userAgent = navigator.userAgent;
+        // Detectar Chrome
+        const isChrome = /Chrome/.test(userAgent) && /Google Inc/.test(navigator.vendor);
+        // Detectar Safari
+        const isSafari = /Safari/.test(userAgent) && /Apple Computer/.test(navigator.vendor);
+        // Detectar Edge
+        const isEdge = /Edg/.test(userAgent);
+        // Retornar true si es uno de los navegadores permitidos
+        if (/SamsungBrowser/i.test(userAgent)) {
+            return false
+        } else {
+            return isChrome || isSafari || isEdge
+        };
+    };
+
+    useEffect(() => {
+        if (!isSupportedBrowser()) {
+            // Redirigir a otra página
+            navigate('/unsupported-browser');
+            // O mostrar un mensaje
+            alert('Su navegador no es compatible con esta aplicación. Por favor, use un navegador diferente.');
+        }
+    }, [navigate]);
 
 
     return (
@@ -93,29 +126,27 @@ const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader,
                     colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']} />
             </div>
             {!loggedIn && (<GuestName t={t} guestName={guestName} setGuestName={setGuestName} setEditName={setEditName} />)}
+            {redeemActive && (<RedeemEmailBox t={t} setRedeemActive={setRedeemActive} />)}
 
-            <section id='header' className={`${isScrolled ? theme ? "bg-[#eea8] fixed" : "bg-[#b9b9b995] fixed" : theme ? "bg-[#ffa8] relative" : "bg-[#91919195] relative"} w-full z-[99] flex flex-col-reverse top-0 ${editName ? "h-[12rem]" : "h-[9rem]"} py-4 items-center justify-evenly shadow-sm backdrop-blur-[1em] md:h-[6rem] md:flex-row md:justify-between md:items-center md:px-12 md:backdrop-blur-[1px] ${tS.bgColorTopBar} md:transition-all md:duration-[250ms] md:ease-in`}>
-                <Link to="/" className="h-[3rem] w-[100%] md:w-[auto] md:h-14 flex flex-row justify-center items-center">
-                    <img className="h-[100%]" src={mainLogo} alt="UpperMoster" title="UpperMoster" />
-                    <img src={upperMoster} alt="UpperMoster" className={`w-[11rem] md:w-[14rem] invert md:invert-0`} />
-                </Link>
-                <div className="w-[100%] md:w-[auto] h-full flex md:flex-row items-center justify-between pl-4 pr-1 pt-4 pb-2 md:pt-0 md:pb-0 md:pr-0 md:pl-0 md:m-0 ">
-                    <section className="w-max h-max md:h-full flex md:flex-row flex-col items-center">
-                        {(loggedIn || totalPoints != 0) && (<section className={`${!theme ? "text-white md:text-white" : "text-black md:text-[#ffa]"}  w-full h-full flex flex-row justify-center items-center pl-2 md:pl-4 md:pr-4`}>
-                            <h2>{loggedIn ? userpoints : totalPoints}</h2>
-                            <img src={pointLogo} alt="points" className="h-[1.8em] w-auto md:invert-[1]" />
-                        </section>
-                        )}
-                        <h1 className={`left-0 ${theme ? "text-black md:text-[#eea]" : "text-white"} ${loggedIn ? "pointer-events-none" : ""} text-[1.1rem] font-semibold uppercase cursor-pointer`} onClick={() => setEditName(!editName)}>{loggedIn ? username : guestName}</h1>
-                        <button className={`${editName ? "display " : "hidden"} w-max h-max p-2 m-2 rounded-md tracking-widest ${!theme ? "bg-[#338] text-[#ddd]" : "bg-[#ee4]"} font-bold  text-[0.8em] capitalize`} onClick={() => setGuestName('')}>{t('edit')}</button>
-                    </section>
-                    <div className="flex flex-row items-center">
-                        <LanguageSelector i18n={i18n} />
-                        <ChangeTheme setTheme={setTheme} theme={theme} />
-                        <button onClick={loggedOutUSer} className={`${loggedIn ? "" : "hidden"} hover:bg-red-500 hover:invert mr-2 bg-gradient-to-tr from-[#ff3e] to-[#8e4a] rounded-xl`}><img className="w-10 h-[auto] p-1 border-solid border-[1px] border-purple-950 rounded-xl" src={loggoutIcon} alt="Log out" /></button>
-                    </div>
-                </div>
-            </section >
+            <TopBar i18n={i18n} theme={theme} setEditName={setEditName} editName={editName} username={username} userpoints={userpoints} setTheme={setTheme} loggedIn={loggedIn} totalPoints={totalPoints} guestName={guestName} setGuestName={setGuestName} t={t} isScrolled={isScrolled} setRedeemActive={setRedeemActive} />
+            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                <AdScript keyValue={3} atOptions={{
+                    'key': '4579ed5f9089da6a442187f2056adfda',
+                    'format': 'iframe',
+                    'height': 50,
+                    'width': 320,
+                    'params': {}
+                }} />
+            </div>)}
+            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                <AdScript keyValue={3} atOptions={{
+                    'key': 'f2525a336948ec91dd454fa763b70b78',
+                    'format': 'iframe',
+                    'height': 90,
+                    'width': 728,
+                    'params': {}
+                }} />
+            </div>)}
 
             <BackBTn />
             <div className={`z-20 ${isScrolled ? "" : "hidden"} bg-transparent h-[8.05rem] md:h-[6rem] w-full`}></div>
@@ -130,13 +161,30 @@ const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader,
             <section className={`w-auto ${tS.textColor}`}>
                 <h1 id="Categorie" className={`w-[4em] text-[2.3em] font-extralight md:text-[2.3em] text-center mb-5 capitalize`}>{t(country.name)}</h1>
             </section>
-            <div id="Content" className={`w-[100%] flex flex-col mb-6 md:flex-row md:w-[80em] h-auto z-10`}>
-                <ul className="flex flex-col justify-center items-center md:flex-row md:flex-wrap">
-                    {country.metrics.map((subcat) => (
+            <div id="Content" className={`w-[100%] flex flex-col mb-6 items-center h-auto z-10`}>
+                <div id="Content" className={`w-[100%] flex flex-col mb-6 md:flex-row md:w-[80em] h-auto z-10`}>
+                    <ul className="flex flex-col justify-center items-center md:flex-row md:flex-wrap">
+                        {country.metrics.map((subcat) => (
 
-                        <CatSubCat key={subcat} i18n={i18n} theme={theme} t={t} subCat={subcat} index={country.metrics.indexOf(subcat)} scrollValueY={scrollValueY} setLoader={setLoader} loader={loader} />
-                    ))}
-                </ul>
+                            <CatSubCat key={subcat} i18n={i18n} theme={theme} t={t} subCat={subcat} index={country.metrics.indexOf(subcat)} scrollValueY={scrollValueY} setLoader={setLoader} loader={loader} />
+                        ))}
+                    </ul>
+                </div>
+                <section
+                    className={`overflow-hidden rounded-3xl relative tracking-tighter group flex flex-col w-[90%] md:w-[30em] h-[10em] my-[1.2em] md:my-[2em] transition-all duration-[250ms] ease-in`}
+                    style={{ boxShadow: `0px 0px 2px 0px ${tS.BW}`, border: `0.1em solid ${tS.borderCol}` }}
+                >
+                    <section
+                        className={`absolute inset-0 bg-cover bg-center transition-transform duration-[450ms] ${window.innerWidth < 720 ? ((scrollValueY >= 1700 && scrollValueY <= 1900) ? "scale-150" : "scale-105") : ""} md:scale-105 ease-in-out transform group-hover:scale-105`}
+                        style={{ backgroundImage: `url(${tablePosition})` }}
+                    />
+                    <Link
+                        to="" className={`active:bg-[#1ee] active:text-[#110] ${window.innerWidth < 720 ? ((scrollValueY >= 1700 && scrollValueY <= 1900) ? "bg-[#773a] backdrop-blur-[0em] text-[#fffefe]" : "text-[#642e13] bg-[#ffffff7c] backdrop-blur-[0.2em]") : ""} flex flex-col justify-center w-[100%] h-[100%] md:text-[#642e13] hover:text-[#fffefe] md:bg-[#ffffff7c] hover:bg-[#033a] backdrop-blur-[0.2em] hover:backdrop-blur-[0em] transition-all duration-[450ms] ease-in-out z-[900]`}
+                        onClick={() => onLoader("../uppersAwards")}
+                    >
+                        <h1 className='font-bold pl-2 text-[1.4em] text-center capitalize'>{t('tableParticipants')}</h1>
+                    </Link>
+                </section>
             </div>
             <Loader theme={theme} loader={loader} />
             <Footer t={t} theme={theme} />

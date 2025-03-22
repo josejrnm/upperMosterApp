@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { checkAdBlock } from 'adblock-checker';
@@ -13,8 +13,14 @@ import ThemeColors from "./utils/themeColors.ts";
 import ScrollToTop from './components/scrollTop.tsx';
 import HigherLowerGameApp from './components/higherlowerGameApp.tsx';
 import CompanyInfo from './components/companyInfo.tsx';
-import MqttCliente from './components/mqttClient.tsx';
 import SignupForm from './components/loginPage.tsx';
+import ParticipantsGiftCard from './components/participantsLobby.tsx';
+import RulesClarifications from './components/rulesClarifications.tsx';
+import UnsupportedBrowser from './components/noSupportedBrowser.tsx';
+import PersonalAccount from './components/personalAccount.tsx';
+import ProtectedRoute from './components/protectedRoute.tsx';
+
+
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -83,15 +89,38 @@ function App() {
     <Router>
       <div className={`App ${isAdblockEnabled || !acceptedCookies ? "hidden" : ""} ${tS.bgColor} flex flex-col justify-center items-center transition-all duration-[250ms]`}>
         <ScrollToTop />
-        {/* <Loader theme={theme} loader={loader} /> */}
+
         <Routes>
-          <Route path='/LoginPage' element={<SignupForm t={t} />} />
           <Route path='/' element={<Home t={t} i18n={i18n} theme={theme} setTheme={setTheme} loggedIn={loggedIn} userName={userName} />} />
           <Route path='games' element={<Games t={t} i18n={i18n} theme={theme} setTheme={setTheme} guestName={guestName} setGuestName={setGuestName} totalPoints={totalPoints} loggedIn={loggedIn} username={userName} userpoints={userPoints} />} />
           <Route path='/games/higherlower' element={<HigherLower t={t} i18n={i18n} theme={theme} setTheme={setTheme} loader={loader} setLoader={setLoader} guestName={guestName} setGuestName={setGuestName} totalPoints={totalPoints} loggedIn={loggedIn} username={userName} userpoints={userPoints} />} />
-          <Route path={`/games/higherlower/App`} element={<HigherLowerGameApp t={t} theme={theme} totalPoints={totalPoints} setTotalPoints={setTotalPoints} />} />
-          <Route path={`/companyInfo`} element={<CompanyInfo t={t} theme={theme} setTheme={setTheme} />} />
-          <Route path={'/mqtt'} element={<MqttCliente />} />
+          <Route path='/games/higherlower/App' element={<HigherLowerGameApp t={t} theme={theme} totalPoints={totalPoints} setTotalPoints={setTotalPoints} userPoints={userPoints} setUserPoints={setUserPoints} loggedIn={loggedIn} />} />
+          <Route path='/uppersAwards' element={<ParticipantsGiftCard theme={theme} setTheme={setTheme} />} />
+
+          <Route
+            path='/personal-Account'
+            element={
+              <ProtectedRoute loggedIn={loggedIn} redirectPath='/LoginPage'>
+                <PersonalAccount t={t} theme={theme} setTheme={setTheme} />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/LoginPage'
+            element={
+              <ProtectedRoute loggedIn={!loggedIn} redirectPath='/personal-Account'>
+                <SignupForm t={t} theme={theme} />
+              </ProtectedRoute>
+            }
+          />
+
+
+          {/* {loggedIn ? <Route path='/personal-Account' element={<PersonalAccount theme={theme} setTheme={setTheme} />} /> : <Route path='/LoginPage' element={<SignupForm t={t} theme={theme} />} />} */}
+          <Route path='/companyInfo' element={<CompanyInfo t={t} theme={theme} setTheme={setTheme} />} />
+          <Route path='/rules&clarifications' element={<RulesClarifications t={t} theme={theme} setTheme={setTheme} />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/unsupported-browser" element={<UnsupportedBrowser />} />
         </Routes>
         <h6 className={`fixed bottom-0 right-2 ${tS.textColor} w-max h-max p-[0.2em] text-center backdrop-blur-sm bg-[#aaa7] rounded-full font-extralight text-[0.8em] tracking-widest`}>v1.14.1</h6>
       </div >
@@ -118,3 +147,4 @@ function App() {
 }
 
 export default App
+

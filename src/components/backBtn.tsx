@@ -1,17 +1,22 @@
-import { Link } from "react-router-dom";
-import backArrow from "../assets/backArrow.svg"
-
+import { useEffect, useState } from "react";
+import { GoHome } from "react-icons/go";
+import { Link } from 'react-router-dom';
+import { getCookie } from "../utils/cookiesManage";
 
 const BackBTn = () => {
+    const [theme, setTheme] = useState(true);
 
+    useEffect(() => {
+        if (getCookie('userTheme')) {
+            setTheme(getCookie('userTheme') === 'true');
+        }
+    }, [getCookie('userTheme')])
 
     return (
         <>
             <div>
-                <Link
-                    to="/games"
-                    className="fixed bottom-[4em] right-[2em] md:right-[4em] z-[999] flex flex-col justify-center items-center rounded-full w-[3.5rem] h-[3.5rem] bg-red-500 hover:rotate-[360deg] transition-all duration-[450ms] ease-in-out">
-                    <img src={backArrow} alt="Back" className="w-[60%]" />
+                <Link to="/" className={`fixed bottom-12 right-6 z-[9999] rounded-2xl ${theme ? 'bg-[#a2a226] hover:bg-[#c2c256]' : 'bg-[#a2affa] hover:bg-[#c2f286]'} w-[3em] h-[3em] flex items-center justify-center transition-all duration-300 ease-in-out`}>
+                    <GoHome size={'1.5em'} color={`${theme ? "black" : 'black'}`} />
                 </Link>
             </div>
         </>
