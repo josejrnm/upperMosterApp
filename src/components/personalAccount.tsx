@@ -229,7 +229,7 @@ const PersonalAccount: React.FC<ProfileProps> = ({ theme, setTheme }) => {
                             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']} />
                         <h1 className='text-white'>{t('redeem')}...</h1>
                     </div> : null} */}
-                    {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                    {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                         <AdScript keyValue={3} atOptions={{
                             'key': '4579ed5f9089da6a442187f2056adfda',
                             'format': 'iframe',
@@ -238,7 +238,7 @@ const PersonalAccount: React.FC<ProfileProps> = ({ theme, setTheme }) => {
                             'params': {}
                         }} />
                     </div>)}
-                    {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                    {window.innerWidth > 720 && (<div key={"divfooter2"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                         <AdScript keyValue={3} atOptions={{
                             'key': 'f2525a336948ec91dd454fa763b70b78',
                             'format': 'iframe',

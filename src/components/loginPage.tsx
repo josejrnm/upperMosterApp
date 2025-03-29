@@ -196,7 +196,7 @@ const SignupForm: React.FC<formProps> = ({ t, theme }) => {
                                     Email: email,
                                     Hashpwd: hashPwd,
                                     Points: pointsGuest > 0 ? pointsGuest : 0,
-                                    Profit: 0
+                                    Profit: 5
                                 });
 
                                 setLoaderGames(false);
@@ -336,7 +336,8 @@ const SignupForm: React.FC<formProps> = ({ t, theme }) => {
                     </form>
                 </section>
                 <section>
-                    <h1 className='py-4 text-white text-[1.2em]'>{t('donthaveaccount')} <button className='text-blue-400 font-semibold' onClick={() => { setLoginSignup(!loginSignup), setEmail(''), setPassword(''), setConfirmPassword(''), setUsername('') }}>{t('signup')}</button></h1>
+                {/* <button className='text-blue-400 text-[1.2em] font-semibold' onClick={() => { setLoginSignup(!loginSignup), setEmail(''), setPassword(''), setConfirmPassword(''), setUsername('') }}>{t('forgetPsw')}</button> */}
+                    <h1 className='pb-4 text-white text-[1.2em]'>{t('donthaveaccount')} <button className='text-blue-400 font-semibold' onClick={() => { setLoginSignup(!loginSignup), setEmail(''), setPassword(''), setConfirmPassword(''), setUsername('') }}>{t('signup')}</button></h1>
                 </section>
             </>) : (<>
                 <h1 className='font-bold text-[3em] md:text-[6em] text-white'>{t('signup')}</h1>
@@ -384,7 +385,7 @@ const SignupForm: React.FC<formProps> = ({ t, theme }) => {
 
                         </div>
                         {!passwordValid && (
-                            <div className='text-white text-sm text-justify p-2 absolute top-0 left-0'><h6>La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.</h6></div>
+                            <div className='text-white text-sm text-justify p-2 absolute top-0 left-0'><h6>{t('passwordAdvice')}</h6></div>
                         )}
                         <div className='relative w-[20em] my-1'>
                             <label htmlFor="confirmpassword" />
@@ -411,7 +412,7 @@ const SignupForm: React.FC<formProps> = ({ t, theme }) => {
                                 {t('showpwd')}
                             </label>
                         </div>
-                        <button type="submit" className='rounded-3xl focus:rounded-2xl px-12 py-3 my-2 transition-all duration-200 ease-linear bg-green-400'>{t('signup')}</button>
+                        <button type="submit" disabled={!passwordValid ? true : false}  className='rounded-3xl focus:rounded-2xl px-12 py-3 my-2 transition-all duration-200 ease-linear disabled bg-green-400'>{t('signup')}</button>
                     </form>
                 </section>
                 <section>
@@ -421,7 +422,7 @@ const SignupForm: React.FC<formProps> = ({ t, theme }) => {
             }
             <button onClick={() => onLoader('/')} className='text-[1.5em] text-white px-4 py-2 bg-gradient-to-bl from-[#1baae1f4] to-[#213129a7] rounded-full hover:from-[#bb4411f4] hover:to-[#eaa129a7] transition-all duration-200 ease-out'>{t('home')}</button>
             <Loader theme={theme} loader={loaderGames} />
-            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                 <AdScript keyValue={3} atOptions={{
                     'key': '4579ed5f9089da6a442187f2056adfda',
                     'format': 'iframe',
@@ -430,7 +431,7 @@ const SignupForm: React.FC<formProps> = ({ t, theme }) => {
                     'params': {}
                 }} />
             </div>)}
-            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                 <AdScript keyValue={3} atOptions={{
                     'key': 'f2525a336948ec91dd454fa763b70b78',
                     'format': 'iframe',

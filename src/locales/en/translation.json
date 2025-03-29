@@ -396,5 +396,7 @@
     "increaseAnnounce": "In each draw, the prize will increase by $5 compared to the previous prize. Next prize: $30",
     "withdraw": "withdraw",
     "needTenDollars": "You need $10 minimum to withdraw",
-    "succesfulWithdraw": "Your withdrawal has been successfully completed. Please remember that it may take up to 15 business days to receive it via PayPal."
+    "forgetPsw": "I forgot my password",
+    "succesfulWithdraw": "Your withdrawal has been successfully completed. Please remember that it may take up to 15 business days to receive it via PayPal.",
+    "passwordAdvice":"The password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
 }

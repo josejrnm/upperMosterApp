@@ -118,6 +118,12 @@ const redeemPointsSorteo = async (points: string) => {
         return;
     }
 
+    ////
+    const participantsRefA = collection(firestore, 'users');
+    const qParticipantA = query(participantsRefA, where('Email', '==', emailUser));
+    const querySnapshotParticipantA = await getDocs(qParticipantA);
+
+    ///////
     const participantsRef = collection(firestore, 'participants');
     const qParticipant = query(participantsRef, where('Email', '==', emailUser));
     const querySnapshotParticipant = await getDocs(qParticipant);
@@ -130,6 +136,15 @@ const redeemPointsSorteo = async (points: string) => {
         await updateDoc(participantDocRef, {
             Points: parseInt(participantData["Points"]) + pointsUpdateA,
         });
+
+        if (!querySnapshotParticipant.empty) {
+            const participantDocA = querySnapshotParticipantA.docs[0]; // Tomamos el primer documento
+            const participantDocRefA = doc(firestore, 'users', participantDocA.id);
+    
+            await updateDoc(participantDocRefA, {
+                Points: Math.ceil((pointsUpdate - pointsUpdateA) * 100) / 100,
+            });
+            }
 
         console.log('Puntos actualizados exitosamente');
     } else {
@@ -170,6 +185,7 @@ const redeemPointsMoney = async (points: string) => {
 
         await updateDoc(participantDocRef, {
             Profit: Math.ceil((parseFloat(participantData["Profit"]) + profitUpdate) * 100) / 100,
+            Points: Math.ceil((pointsUpdate - (profitUpdate * 100000)) * 100) / 100,
         });
 
         console.log('¨Profit actualizado exitosamente');

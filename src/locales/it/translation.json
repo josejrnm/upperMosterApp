@@ -393,5 +393,7 @@
     "increaseAnnounce": "Ad ogni estrazione, il premio aumenterà di $5 rispetto al premio precedente. Prossimo premio: $30",
     "withdraw": "ritirare",
     "needTenDollars": "Hai bisogno di $10 minimo per ritirare",
-    "succesfulWithdraw": "Il tuo prelievo è stato completato con successo. Ricorda che potrebbero essere necessari fino a 15 giorni lavorativi per riceverlo tramite PayPal."
+    "forgetPsw": "Ho dimenticato la mia password",
+    "succesfulWithdraw": "Il tuo prelievo è stato completato con successo. Ricorda che potrebbero essere necessari fino a 15 giorni lavorativi per riceverlo tramite PayPal.",
+    "passwordAdvice":"La password deve contenere almeno 8 caratteri, una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale."
 }

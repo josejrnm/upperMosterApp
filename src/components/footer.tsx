@@ -3,7 +3,6 @@ import { TFunction } from "i18next"
 import { Link } from "react-router-dom"
 import { SocialIcon } from "react-social-icons/component"
 import ThemeColors from "../utils/themeColors"
-// import AdScript from "./adscript"
 import "../styles/footer.css"
 import 'react-social-icons/x'
 import 'react-social-icons/pinterest'

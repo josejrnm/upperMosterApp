@@ -252,7 +252,7 @@ const ParticipantsGiftCard: React.FC<LobbyProps> = ({ theme, setTheme }) => {
                             <h1 className='flex flex-row items-center justify-center font-extrabold uppercase pl-2 text-[6em] -mt-2 text-center'>
                             <IoLogoUsd className='inline-block -mr-3 duration-200 ease-out transition-all' color={`${theme ? '#6a6a21' : '#111139'}`} size={'0.85em'}/>25
                                 </h1>
-                            <h1 className='font-semibold uppercase pl-2 md:text-[1em] text-[0.8em] text-center'>{formatDate('15/12/2024',i18n.language)}</h1>
+                            <h1 className='font-semibold uppercase pl-2 md:text-[1em] text-[0.8em] text-center'>{formatDate('15/04/2025',i18n.language)}</h1>
                             <h1 className='font-semibold uppercase pl-2 md:text-[1em] text-[0.8em] text-center'>{t('dateNextDraw')}</h1>
                         </Link>
                     </section >
@@ -349,7 +349,7 @@ const ParticipantsGiftCard: React.FC<LobbyProps> = ({ theme, setTheme }) => {
                             <h1>* {t('clarification4')}</h1>
                         </div>
                     </div>
-                    {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                    {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                         <AdScript keyValue={3} atOptions={{
                             'key': '4579ed5f9089da6a442187f2056adfda',
                             'format': 'iframe',
@@ -358,7 +358,7 @@ const ParticipantsGiftCard: React.FC<LobbyProps> = ({ theme, setTheme }) => {
                             'params': {}
                         }} />
                     </div>)}
-                    {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                    {window.innerWidth > 720 && (<div key={"divfooter2"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                         <AdScript keyValue={3} atOptions={{
                             'key': 'f2525a336948ec91dd454fa763b70b78',
                             'format': 'iframe',

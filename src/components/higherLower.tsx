@@ -129,7 +129,7 @@ const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader,
             {redeemActive && (<RedeemEmailBox t={t} setRedeemActive={setRedeemActive} />)}
 
             <TopBar i18n={i18n} theme={theme} setEditName={setEditName} editName={editName} username={username} userpoints={userpoints} setTheme={setTheme} loggedIn={loggedIn} totalPoints={totalPoints} guestName={guestName} setGuestName={setGuestName} t={t} isScrolled={isScrolled} setRedeemActive={setRedeemActive} />
-            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                 <AdScript keyValue={3} atOptions={{
                     'key': '4579ed5f9089da6a442187f2056adfda',
                     'format': 'iframe',
@@ -138,7 +138,7 @@ const HigherLower: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, setLoader,
                     'params': {}
                 }} />
             </div>)}
-            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                 <AdScript keyValue={3} atOptions={{
                     'key': 'f2525a336948ec91dd454fa763b70b78',
                     'format': 'iframe',

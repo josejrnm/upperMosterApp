@@ -393,5 +393,7 @@
     "increaseAnnounce":"En cada sorteo el premio aumentará $5 con respecto al premio anterior. Próximo premio: $30",
     "withdraw":"retirar",
     "needTenDollars":"Necesita $10 mínimo para retirar",
-    "succesfulWithdraw":"Su retiro se ha realizado exitosamente. Recuerde que debe esperar hasta 15 días hábiles para recibirlo via PayPal"
+    "forgetPsw": "Olvidé mi contraseña",
+    "succesfulWithdraw":"Su retiro se ha realizado exitosamente. Recuerde que debe esperar hasta 15 días hábiles para recibirlo via PayPal",
+    "passwordAdvice": "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial."
 }

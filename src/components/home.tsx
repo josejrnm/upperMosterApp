@@ -155,7 +155,7 @@ const Home: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, loggedIn, userNam
                     </div>
                 </div>
             </section >
-            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                 <AdScript keyValue={3} atOptions={{
                     'key': '4579ed5f9089da6a442187f2056adfda',
                     'format': 'iframe',
@@ -164,7 +164,7 @@ const Home: React.FC<HomeProps> = ({ t, i18n, theme, setTheme, loggedIn, userNam
                     'params': {}
                 }} />
             </div>)}
-            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+            {window.innerWidth > 720 && (<div key={"divfooter2"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                 <AdScript keyValue={3} atOptions={{
                     'key': 'f2525a336948ec91dd454fa763b70b78',
                     'format': 'iframe',

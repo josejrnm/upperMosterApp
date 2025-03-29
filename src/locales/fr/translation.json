@@ -393,6 +393,7 @@
     "increaseAnnounce": "À chaque tirage, le prix augmentera de $5 par rapport au prix précédent. Prochain prix: $30",
     "withdraw": "retirer",
     "needTenDollars": "Vous avez besoin de $10 minimum pour retirer",
-    "succesfulWithdraw": "Votre retrait a été effectué avec succès. Veuillez noter qu'il peut prendre jusqu'à 15 jours ouvrables pour le recevoir via PayPal."
-    
+    "forgetPsw": "J'ai oublié mon mot de passe",
+    "succesfulWithdraw": "Votre retrait a été effectué avec succès. Veuillez noter qu'il peut prendre jusqu'à 15 jours ouvrables pour le recevoir via PayPal.",
+    "passwordAdvice":" Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial."
 }

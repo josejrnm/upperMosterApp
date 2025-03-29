@@ -38,7 +38,7 @@ const RulesClarifications: React.FC<InfoProps> = ({ t, theme, setTheme }) => {
                 </section>
                 <div className={`flex flex-row justify-around w-full h-full my-8`}>
                     <section id="ads" className={`md:flex flex-row w-[15%] h-full m-2`}>
-                        {window.innerWidth > 720 && (<div key={"divfooter2"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                        {window.innerWidth > 720 && (<div key={"divfooter2"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                             <AdScript keyValue={3} atOptions={{
                                 'key': '8e9a9be6062ab8e934786da634816ee3',
                                 'format': 'iframe',
@@ -66,7 +66,7 @@ const RulesClarifications: React.FC<InfoProps> = ({ t, theme, setTheme }) => {
                             ))}
                         </section>
                         <section id="ads">
-                            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static bottom-0 left-0 right-0 m-[auto] bg-slate-400">
+                            {window.innerWidth <= 720 && (<div key={"divfooter1"} className="static invisible bottom-0 left-0 right-0 m-[auto] bg-slate-400">
                                 <AdScript keyValue={3} atOptions={{
                                     'key': '4579ed5f9089da6a442187f2056adfda',
                                     'format': 'iframe',

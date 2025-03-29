@@ -394,6 +394,7 @@
     "increaseAnnounce": "A cada sorteio, o prêmio aumentará $5 em relação ao prêmio anterior. Próximo prêmio: $30",
     "withdraw": "retirar",
     "needTenDollars": "Você precisa de $10 no mínimo para retirar",
+    "forgetPsw": "Esqueci minha senha", 
     "succesfulWithdraw": "Seu saque foi realizado com sucesso. Lembre-se de que pode levar até 15 dias úteis para recebê-lo via PayPal."
-    
+    ,"passwordAdvice":"A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial."
 }
